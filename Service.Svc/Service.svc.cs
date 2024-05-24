@@ -6,6 +6,12 @@ using Interface;
 using Business;
 using Interface.Dto;
 using System.ServiceModel.Web;
+using Interface.Dto.Request;
+using Interface.Dto.Response;
+using System.ServiceModel.Description;
+using System.ServiceModel;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Service.Svc
 {
@@ -19,9 +25,13 @@ namespace Service.Svc
         }
 
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "RegistrarUsuario")]
-        public void RegistrarUsuario(UsuarioDto usuario)
+        public RegistrarUsuarioResponseDto RegistrarUsuario(RegistrarUsuarioRequestDto request)
         {
-            _boUsuario.RegistrarUsuario(usuario);
+            return _boUsuario.RegistrarUsuario(request);
         }
     }
 }
+
+
+
+

@@ -2,13 +2,7 @@
 using Interface.Dto.Response;
 using DataAccess;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using Interface.Dto;
-using System.IO;
+using Npgsql;
 
 namespace Business
 {
@@ -21,16 +15,42 @@ namespace Business
             _dataAccess = new DOProyectoSalud();
         }
 
-        public void RegistrarUsuario(UsuarioDto usuario)
+        public RegistrarUsuarioResponseDto RegistrarUsuario(RegistrarUsuarioRequestDto request)
         {
-            // Insertar datos del padre
-            int padreId = _dataAccess.InsertarPadre(usuario.padre);
+            var response = new RegistrarUsuarioResponseDto();
 
-            // Establecer el id del padre en el objeto UsuarioDto
-            usuario.padre.id = padreId;
+            using (var connection = new NpgsqlConnection(_dataAccess.ConnectionString))
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        int padreId = _dataAccess.InsertarPadre(request.usuario.padre, connection, transaction);
+                        request.usuario.padre.id = padreId;
 
-            // Insertar datos del usuario con el id del padre
-            _dataAccess.InsertarUsuario(usuario);
+                        _dataAccess.InsertarUsuario(request.usuario, connection, transaction);
+
+                        transaction.Commit();
+
+                        response.Success = true;
+                        response.Message = "Su registro ha sido exitoso.";
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+
+                        response.Success = false;
+                        response.Message = "No se pudo registrar al usuario: " + ex.Message;
+                    }
+                }
+            }
+
+            return response;
         }
     }
 }
+
+
+
+

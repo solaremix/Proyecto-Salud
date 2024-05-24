@@ -35,6 +35,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -50,16 +53,15 @@
     <Compile Include="Dto\PadreDto.cs" />
     <Compile Include="Dto\PerfilPacienteDto.cs" />
     <Compile Include="Dto\RegistroMedicoDto.cs" />
-    <Compile Include="Dto\Request\PadreRequestDto.cs" />
-    <Compile Include="Dto\Request\UsuarioRequestDto.cs" />
-    <Compile Include="Dto\Response\PadreResponseDto.cs" />
+    <Compile Include="Dto\Request\RegistrarUsuarioRequestDto.cs" />
     <Compile Include="Dto\Response\RegistrarUsuarioResponseDto.cs" />
-    <Compile Include="Dto\Response\UsuarioResponseDto.cs" />
     <Compile Include="Dto\UsuarioDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IProyectoSalud.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <VSToolsPath Condition="'$(VSToolsPath)' == '' and '$(VisualStudioVersion)' != '' and '$(VisualStudioVersion)' != '11.0'">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

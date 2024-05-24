@@ -1,11 +1,8 @@
 ﻿using Interface.Dto;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
+
+
 
 namespace DataAccess
 {
@@ -15,45 +12,44 @@ namespace DataAccess
 
         public DOProyectoSalud()
         {
-            _connectionString = "Host=localhost;Port=5432;Database=ProyectoSalud;Username=postgres;Password=Starbucks2020";
+            //_connectionString = "Host=localhost;Port=5432;Database=ProyectoSalud;Username=postgres;Password=Starbucks2020";
+            _connectionString = ConfigurationManager.ConnectionStrings["ProyectoSalud"].ConnectionString;
         }
 
-        public int InsertarPadre(PadreDto padre)
-        {
-            using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                connection.Open();
-                using (var command = new NpgsqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandText = "INSERT INTO Padres (nombre, apellido, dni, genero, fechaNacimiento) VALUES (@nombre, @apellido, @dni, @genero, @fechaNacimiento) RETURNING id";
-                    command.Parameters.AddWithValue("@nombre", padre.nombre);
-                    command.Parameters.AddWithValue("@apellido", padre.apellido);
-                    command.Parameters.AddWithValue("@dni", padre.dni);
-                    command.Parameters.AddWithValue("@genero", padre.genero);
-                    command.Parameters.AddWithValue("@fechaNacimiento", padre.fechaNacimiento);
+        public string ConnectionString => _connectionString;
 
-                    return (int)command.ExecuteScalar();
-                }
+        public int InsertarPadre(PadreDto padre, NpgsqlConnection connection, NpgsqlTransaction transaction)
+        {
+            using (var command = new NpgsqlCommand())
+            {
+                command.Connection = connection;
+                command.Transaction = transaction;
+                //command.CommandText = "SET datestyle = 'ISO, YMD';";
+                command.CommandText = "INSERT INTO Padres (nombre, apellido, dni, genero, fechaNacimiento) VALUES (@nombre, @apellido, @dni, @genero, @fechaNacimiento) RETURNING id";
+                command.Parameters.AddWithValue("@nombre", padre.nombre);
+                command.Parameters.AddWithValue("@apellido", padre.apellido);
+                command.Parameters.AddWithValue("@dni", padre.dni);
+                command.Parameters.AddWithValue("@genero", padre.genero);
+                command.Parameters.AddWithValue("@fechaNacimiento", padre.fechaNacimiento);
+
+                return (int)command.ExecuteScalar();
             }
         }
 
-        public void InsertarUsuario(UsuarioDto usuario)
+        public void InsertarUsuario(UsuarioDto usuario, NpgsqlConnection connection, NpgsqlTransaction transaction)
         {
-            using (var connection = new NpgsqlConnection(_connectionString))
+            using (var command = new NpgsqlCommand())
             {
-                connection.Open();
-                using (var command = new NpgsqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandText = "INSERT INTO Usuarios (email, contraseña, padreId) VALUES (@Email, @Contrasena, @PadreId)";
-                    command.Parameters.AddWithValue("@Email", usuario.email);
-                    command.Parameters.AddWithValue("@Contrasena", usuario.contrasena);
-                    command.Parameters.AddWithValue("@PadreId", usuario.padre.id); // Asegurarse de que esto está correctamente establecido
+                command.Connection = connection;
+                command.Transaction = transaction;
+                command.CommandText = "INSERT INTO Usuarios (email, contraseña, padreId) VALUES (@email, @contrasena, @padreId)";
+                command.Parameters.AddWithValue("@email", usuario.email);
+                command.Parameters.AddWithValue("@contrasena", usuario.contrasena);
+                command.Parameters.AddWithValue("@padreId", usuario.padre.id);
 
-                    command.ExecuteNonQuery();
-                }
+                command.ExecuteNonQuery();
             }
         }
     }
 }
+

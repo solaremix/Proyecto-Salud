@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace Interface.Dto.Request
 {
-    public class PadreRequestDto
+    public class RegistrarUsuarioRequestDto
     {
+        public UsuarioDto usuario { get; set; }
     }
 }
+
+

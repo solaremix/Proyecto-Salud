@@ -1,6 +1,7 @@
 ﻿using System.ServiceModel;
 using System.ServiceModel.Web;
-using Interface.Dto;
+using Interface.Dto.Request;
+using Interface.Dto.Response;
 
 namespace Interface
 {
@@ -9,6 +10,6 @@ namespace Interface
     {
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "RegistrarUsuario")]
-        void RegistrarUsuario(UsuarioDto usuario);
+        RegistrarUsuarioResponseDto RegistrarUsuario(RegistrarUsuarioRequestDto request);
     }
 }
