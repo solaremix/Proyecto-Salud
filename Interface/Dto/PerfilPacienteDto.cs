@@ -8,18 +8,12 @@ namespace Interface.Dto
 {
     public class PerfilPacienteDto
     {
-        public string Nombre { get; set; }
-        public DateTime FechaNacimiento { get; set; }
-        public string Dni { get; set; }
-        public string Genero { get; set; }
-        public int EdadAnios { get; set; }
-        public int EdadMeses { get; set; }
-        public List<RegistroMedicoDto> RegistrosMedicos { get; set; }
+        public string nombre { get; set; }
+        public DateTime fechaNacimiento { get; set; }
+        public string dni { get; set; }
+        public int edadAnios { get; set; }
+        public int edadMeses { get; set; }
+        public List<RegistroMedicoDto> registrosMedicos { get; set; }
 
-        public PerfilPacienteDto()
-        {
-            RegistrosMedicos = new List<RegistroMedicoDto>();
-        }
     }
 }
-

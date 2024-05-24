@@ -1,16 +1,27 @@
-﻿using Interface;
-using System;
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Interface;
+using Business;
+using Interface.Dto;
+using System.ServiceModel.Web;
 
 namespace Service.Svc
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
-    // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
-    public class Service : IService
+    public class Service : IProyectoSalud
     {
-        public int GetRandomNumber()
+        private readonly BOUsuario _boUsuario;
+
+        public Service()
         {
-            Random random = new Random();
-            return random.Next(1, 100);  // Devuelve un número aleatorio entre 1 y 99.
+            _boUsuario = new BOUsuario();
+        }
+
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "RegistrarUsuario")]
+        public void RegistrarUsuario(UsuarioDto usuario)
+        {
+            _boUsuario.RegistrarUsuario(usuario);
         }
     }
 }

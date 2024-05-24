@@ -8,9 +8,7 @@ namespace Interface.Dto
 {
     public class RegistroMedicoDto
     {
-        public DateTime Fecha { get; set; }
-        public float Peso { get; set; }
-        public float Talla { get; set; }
+        public DateTime fecha { get; set; }
+        public DatosMedicosDto datos { get; set; }
     }
 }
-
