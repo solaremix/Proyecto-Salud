@@ -53,7 +53,9 @@
     <Compile Include="Dto\PadreDto.cs" />
     <Compile Include="Dto\PerfilPacienteDto.cs" />
     <Compile Include="Dto\RegistroMedicoDto.cs" />
+    <Compile Include="Dto\Request\IniciarSesionRequestDto.cs" />
     <Compile Include="Dto\Request\RegistrarUsuarioRequestDto.cs" />
+    <Compile Include="Dto\Response\IniciarSesionResponseDto.cs" />
     <Compile Include="Dto\Response\RegistrarUsuarioResponseDto.cs" />
     <Compile Include="Dto\UsuarioDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

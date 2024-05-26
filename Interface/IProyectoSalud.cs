@@ -11,5 +11,9 @@ namespace Interface
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "RegistrarUsuario")]
         RegistrarUsuarioResponseDto RegistrarUsuario(RegistrarUsuarioRequestDto request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "IniciarSesion")]
+        IniciarSesionResponseDto IniciarSesion(IniciarSesionRequestDto request);
     }
 }

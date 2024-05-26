@@ -50,6 +50,42 @@ namespace DataAccess
                 command.ExecuteNonQuery();
             }
         }
+
+        public UsuarioDto ObtenerUsuarioPorEmailYContrasena(string email, string contrasena, NpgsqlConnection connection)
+        {
+            using (var command = new NpgsqlCommand())
+            {
+                command.Connection = connection;
+                command.CommandText = "SELECT u.email, u.contraseña, p.nombre, p.apellido, p.dni, p.genero, p.fechaNacimiento " +
+                                      "FROM Usuarios u JOIN Padres p ON u.padreId = p.id " +
+                                      "WHERE u.email = @correo AND u.contraseña = @contrasena";
+                command.Parameters.AddWithValue("@correo", email);
+                command.Parameters.AddWithValue("@contrasena", contrasena);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new UsuarioDto
+                        {
+                            email = reader.GetString(0),
+                            contrasena = reader.GetString(1),
+                            padre = new PadreDto
+                            {
+                                nombre = reader.GetString(2),
+                                apellido = reader.GetString(3),
+                                dni = reader.GetString(4),
+                                genero = reader.GetString(5),
+                                fechaNacimiento = reader.GetDateTime(6)
+                            }
+                        };
+                    }
+                }
+            }
+            return null;
+        }
     }
+
+
 }
 
