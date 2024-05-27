@@ -3,6 +3,7 @@ using Interface.Dto.Response;
 using DataAccess;
 using System;
 using Npgsql;
+using Interface.Dto;
 
 namespace Business
 {
@@ -49,32 +50,64 @@ namespace Business
             return response;
         }
 
-        public IniciarSesionResponseDto IniciarSesion(IniciarSesionRequestDto request)
+        public AgregarPerfilPacienteResponseDto AgregarPerfilPaciente(int usuarioId, PerfilPacienteDto perfilPaciente)
         {
-            var response = new IniciarSesionResponseDto();
+            var response = new AgregarPerfilPacienteResponseDto();
 
             using (var connection = new NpgsqlConnection(_dataAccess.ConnectionString))
             {
                 connection.Open();
-                try
+                using (var transaction = connection.BeginTransaction())
                 {
-                    var usuario = _dataAccess.ObtenerUsuarioPorEmailYContrasena(request.email, request.contrasena, connection);
-                    if (usuario != null)
+                    try
                     {
+                        _dataAccess.InsertarPerfilPaciente(usuarioId, perfilPaciente, connection, transaction);
+
+                        transaction.Commit();
+
                         response.Success = true;
-                        response.Message = "Inicio de sesión exitoso.";
-                        response.Usuario = usuario;
+                        response.Message = "Perfil de paciente agregado exitosamente.";
                     }
-                    else
+                    catch (Exception ex)
                     {
+                        transaction.Rollback();
+
                         response.Success = false;
-                        response.Message = "Email o contraseña incorrectos.";
+                        response.Message = "No se pudo agregar el perfil de paciente: " + ex.Message;
                     }
                 }
-                catch (Exception ex)
+            }
+
+            return response;
+        }
+
+        public AgregarRegistroMedicoResponseDto AgregarRegistroMedico(AgregarRegistroMedicoRequestDto request)
+        {
+            var response = new AgregarRegistroMedicoResponseDto();
+
+            using (var connection = new NpgsqlConnection(_dataAccess.ConnectionString))
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
                 {
-                    response.Success = false;
-                    response.Message = "Error al iniciar sesión: " + ex.Message;
+                    try
+                    {
+                        int registroMedicoId = _dataAccess.InsertarRegistroMedico(request.perfilPacienteId, request.registroMedico, connection, transaction);
+
+                        _dataAccess.InsertarDatosMedicos(registroMedicoId, request.registroMedico.datos, connection, transaction);
+
+                        transaction.Commit();
+
+                        response.success = true;
+                        response.message = "Registro médico agregado exitosamente.";
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+
+                        response.success = false;
+                        response.message = "No se pudo agregar el registro médico: " + ex.Message;
+                    }
                 }
             }
 
@@ -82,7 +115,3 @@ namespace Business
         }
     }
 }
-
-
-
-
