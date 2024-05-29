@@ -266,7 +266,7 @@ namespace DataAccess
             using (var command = new NpgsqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT r.fecha, d.peso, d.talla " +
+                command.CommandText = "SELECT r.id AS registroMedicoId, r.fecha, d.peso, d.talla " +
                                       "FROM RegistroMedicos r " +
                                       "JOIN DatosMedicos d ON r.id = d.registroMedicoId " +
                                       "WHERE r.perfilPacienteId = @perfilPacienteId";
@@ -278,9 +278,11 @@ namespace DataAccess
                     {
                         var registro = new RegistroMedicoDto
                         {
+                            registroMedicoId = reader.GetInt32(reader.GetOrdinal("registroMedicoId")),
                             fecha = reader.GetDateTime(reader.GetOrdinal("fecha")),
                             datos = new DatosMedicosDto
                             {
+                                registroMedicoId = reader.GetInt32(reader.GetOrdinal("registroMedicoId")),
                                 peso = Convert.ToSingle(reader["peso"]),
                                 talla = Convert.ToSingle(reader["talla"])
                             }
@@ -293,7 +295,8 @@ namespace DataAccess
             return registros;
         }
     }
-
-
 }
+
+
+
 
