@@ -4,6 +4,7 @@ using DataAccess;
 using System;
 using Npgsql;
 using Interface.Dto;
+using System.Collections.Generic;
 
 namespace Business
 {
@@ -112,6 +113,39 @@ namespace Business
             }
 
             return response;
+        }
+
+        public ListarPacientesPorUsuarioResponseDto ObtenerPerfilesPorUsuarioId(int usuarioId)
+        {
+            var response = new ListarPacientesPorUsuarioResponseDto();
+
+            using (var connection = new NpgsqlConnection(_dataAccess.ConnectionString))
+            {
+                connection.Open();
+                try
+                {
+                    var perfiles = _dataAccess.ObtenerPerfilesPorUsuarioId(usuarioId, connection);
+                    response.Perfiles = perfiles;
+                    response.Success = true;
+                    response.Message = "Perfiles obtenidos exitosamente.";
+                }
+                catch (Exception ex)
+                {
+                    response.Success = false;
+                    response.Message = "Error al obtener los perfiles: " + ex.Message;
+                }
+            }
+
+            return response;
+        }
+
+        public List<RegistroMedicoDto> ObtenerRegistrosMedicosPorPerfilPacienteId(int perfilPacienteId)
+        {
+            using (var connection = new NpgsqlConnection(_dataAccess.ConnectionString))
+            {
+                connection.Open();
+                return _dataAccess.ObtenerRegistrosMedicosPorPerfilPacienteId(perfilPacienteId, connection);
+            }
         }
     }
 }

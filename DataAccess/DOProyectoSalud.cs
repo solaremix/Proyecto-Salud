@@ -1,5 +1,7 @@
 ﻿using Interface.Dto;
 using Npgsql;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 
 
@@ -56,7 +58,7 @@ namespace DataAccess
             using (var command = new NpgsqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT u.email, u.contraseña, p.nombre, p.apellido, p.dni, p.genero, p.fechaNacimiento " +
+                command.CommandText = "SELECT u.id, u.email, u.contraseña, p.id, p.nombre, p.apellido, p.dni, p.genero, p.fechaNacimiento " +
                                       "FROM Usuarios u JOIN Padres p ON u.padreId = p.id " +
                                       "WHERE u.email = @correo AND u.contraseña = @contrasena";
                 command.Parameters.AddWithValue("@correo", email);
@@ -68,15 +70,17 @@ namespace DataAccess
                     {
                         return new UsuarioDto
                         {
-                            email = reader.GetString(0),
-                            contrasena = reader.GetString(1),
+                            id = reader.GetInt32(0),        // ID del usuario
+                            email = reader.GetString(1),    // Email del usuario
+                            contrasena = reader.GetString(2), // Contraseña del usuario
                             padre = new PadreDto
                             {
-                                nombre = reader.GetString(2),
-                                apellido = reader.GetString(3),
-                                dni = reader.GetString(4),
-                                genero = reader.GetString(5),
-                                fechaNacimiento = reader.GetDateTime(6)
+                                id = reader.GetInt32(3),    // ID del padre
+                                nombre = reader.GetString(4), // Nombre del padre
+                                apellido = reader.GetString(5), // Apellido del padre
+                                dni = reader.GetString(6),    // DNI del padre
+                                genero = reader.GetString(7), // Género del padre
+                                fechaNacimiento = reader.GetDateTime(8) // Fecha de nacimiento del padre
                             }
                         };
                     }
@@ -218,6 +222,75 @@ namespace DataAccess
 
                 command.ExecuteNonQuery();
             }
+        }
+
+        public List<PerfilPacienteDto> ObtenerPerfilesPorUsuarioId(int usuarioId, NpgsqlConnection connection)
+        {
+            var perfiles = new List<PerfilPacienteDto>();
+
+            using (var command = new NpgsqlCommand())
+            {
+                command.Connection = connection;
+                command.CommandText = "SELECT p.id, p.nombre, p.dni, p.fechaNacimiento, p.genero, p.edadAnios, p.edadMeses " +
+                                      "FROM PerfilPacientes p " +
+                                      "JOIN Usuarios u ON p.usuarioId = u.id " +
+                                      "WHERE u.id = @usuarioId";
+                command.Parameters.AddWithValue("@usuarioId", usuarioId);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var perfil = new PerfilPacienteDto
+                        {
+                            id = reader.GetInt32(reader.GetOrdinal("id")),
+                            nombre = reader.GetString(reader.GetOrdinal("nombre")),
+                            dni = reader.GetString(reader.GetOrdinal("dni")),
+                            fechaNacimiento = reader.GetDateTime(reader.GetOrdinal("fechaNacimiento")),
+                            genero = reader.GetString(reader.GetOrdinal("genero")),
+                            edadAnios = reader.GetInt32(reader.GetOrdinal("edadAnios")),
+                            edadMeses = reader.GetInt32(reader.GetOrdinal("edadMeses"))
+                        };
+                        perfiles.Add(perfil);
+                    }
+                }
+            }
+
+            return perfiles;
+        }
+
+        public List<RegistroMedicoDto> ObtenerRegistrosMedicosPorPerfilPacienteId(int perfilPacienteId, NpgsqlConnection connection)
+        {
+            var registros = new List<RegistroMedicoDto>();
+
+            using (var command = new NpgsqlCommand())
+            {
+                command.Connection = connection;
+                command.CommandText = "SELECT r.fecha, d.peso, d.talla " +
+                                      "FROM RegistroMedicos r " +
+                                      "JOIN DatosMedicos d ON r.id = d.registroMedicoId " +
+                                      "WHERE r.perfilPacienteId = @perfilPacienteId";
+                command.Parameters.AddWithValue("@perfilPacienteId", perfilPacienteId);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var registro = new RegistroMedicoDto
+                        {
+                            fecha = reader.GetDateTime(reader.GetOrdinal("fecha")),
+                            datos = new DatosMedicosDto
+                            {
+                                peso = Convert.ToSingle(reader["peso"]),
+                                talla = Convert.ToSingle(reader["talla"])
+                            }
+                        };
+                        registros.Add(registro);
+                    }
+                }
+            }
+
+            return registros;
         }
     }
 

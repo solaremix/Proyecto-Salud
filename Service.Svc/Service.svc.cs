@@ -4,6 +4,7 @@ using Interface;
 using Interface.Dto.Request;
 using Interface.Dto.Response;
 using Business;
+using System;
 
 namespace Service.Svc
 {
@@ -70,6 +71,32 @@ namespace Service.Svc
         public EliminarRegistroMedicoResponseDto EliminarRegistroMedico(EliminarRegistroMedicoRequestDto request)
         {
             return _boRegistroMedico.EliminarRegistroMedico(request);
+        }
+
+        public ListarPacientesPorUsuarioResponseDto ListarPacientesPorUsuario(ListarPacientesPorUsuarioRequestDto request)
+        {
+            return _boUsuario.ObtenerPerfilesPorUsuarioId(request.UsuarioId);
+        }
+
+        public ListarRegistroMedicoPorPerfilPacienteResponseDto ListarRegistroMedicoPorPerfilPaciente(ListarRegistroMedicoPorPerfilPacienteRequestDto request)
+        {
+            var response = new ListarRegistroMedicoPorPerfilPacienteResponseDto();
+
+            try
+            {
+                Console.WriteLine($"PerfilPacienteId recibido: {request.PerfilPacienteId}"); // Debug
+                var registrosMedicos = _boUsuario.ObtenerRegistrosMedicosPorPerfilPacienteId(request.PerfilPacienteId);
+                response.RegistrosMedicos = registrosMedicos;
+                response.Success = true;
+                response.Message = "Lista de registros médicos recuperada exitosamente.";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = "Error al obtener la lista de registros médicos: " + ex.Message;
+            }
+
+            return response;
         }
     }
 }

@@ -47,5 +47,14 @@ namespace Interface
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "EliminarRegistroMedico", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         EliminarRegistroMedicoResponseDto EliminarRegistroMedico(EliminarRegistroMedicoRequestDto request);
+
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "ListarPacientesPorUsuario", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        ListarPacientesPorUsuarioResponseDto ListarPacientesPorUsuario(ListarPacientesPorUsuarioRequestDto request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "ListarRegistroMedicoPorPerfilPaciente", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        ListarRegistroMedicoPorPerfilPacienteResponseDto ListarRegistroMedicoPorPerfilPaciente(ListarRegistroMedicoPorPerfilPacienteRequestDto request);
     }
 }

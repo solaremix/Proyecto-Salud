@@ -59,9 +59,11 @@
     <Compile Include="Dto\Request\EliminarPerfilPacienteRequestDto.cs" />
     <Compile Include="Dto\Request\EliminarRegistroMedicoRequestDto.cs" />
     <Compile Include="Dto\Request\IniciarSesionRequestDto.cs" />
+    <Compile Include="Dto\Request\ListarRegistroMedicoPorPerfilPacienteRequestDto.cs" />
     <Compile Include="Dto\Request\ModificarDatosPacienteRequestDto.cs" />
     <Compile Include="Dto\Request\ModificarDatosUsuarioRequestDto.cs" />
     <Compile Include="Dto\Request\ModificarRegistroMedicoRequestDto.cs" />
+    <Compile Include="Dto\Request\ListarPacientesPorUsuarioRequestDto.cs" />
     <Compile Include="Dto\Request\RegistrarUsuarioRequestDto.cs" />
     <Compile Include="Dto\Response\AgregarPerfilPacienteResponseDto.cs" />
     <Compile Include="Dto\Response\AgregarRegistroMedicoResponseDto.cs" />
@@ -69,9 +71,11 @@
     <Compile Include="Dto\Response\EliminarPerfilPacienteResponseDto.cs" />
     <Compile Include="Dto\Response\EliminarRegistroMedicoResponseDto.cs" />
     <Compile Include="Dto\Response\IniciarSesionResponseDto.cs" />
+    <Compile Include="Dto\Response\ListarRegistroMedicoPorPerfilPacienteResponseDto.cs" />
     <Compile Include="Dto\Response\ModificarDatosPacienteResponseDto.cs" />
     <Compile Include="Dto\Response\ModificarDatosUsuarioResponseDto.cs" />
     <Compile Include="Dto\Response\ModificarRegistroMedicoResponseDto.cs" />
+    <Compile Include="Dto\Response\ListarPacientesPorUsuarioResponseDto.cs" />
     <Compile Include="Dto\Response\RegistrarUsuarioResponseDto.cs" />
     <Compile Include="Dto\UsuarioDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
