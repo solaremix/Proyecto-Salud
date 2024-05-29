@@ -8,6 +8,7 @@ namespace Interface.Dto
 {
     public class RegistroMedicoDto
     {
+        public int registroMedicoId { get; set; }
         public DateTime fecha { get; set; }
         public DatosMedicosDto datos { get; set; }
     }

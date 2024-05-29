@@ -8,6 +8,7 @@ namespace Interface.Dto
 {
     public class DatosMedicosDto
     {
+        public int registroMedicoId { get; set; }
         public float peso { get; set; }
         public float talla { get; set; }
     }
