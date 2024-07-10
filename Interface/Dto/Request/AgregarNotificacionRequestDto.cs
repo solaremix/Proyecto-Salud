@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace Interface.Dto
+namespace Interface.Dto.Request
 {
-    public class NotificacionDto
+    public class AgregarNotificacionRequestDto
     {
-        public int Id { get; set; }
         public int UsuarioId { get; set; }
         public string Descripcion { get; set; }
         public DateTime FechaHora { get; set; }

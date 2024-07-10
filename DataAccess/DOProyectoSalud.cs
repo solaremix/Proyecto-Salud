@@ -437,10 +437,45 @@ namespace DataAccess
         }
 
 
+        public void InsertarNotificacion(NotificacionDto notificacion, NpgsqlConnection connection, NpgsqlTransaction transaction)
+        {
+            using (var cmd = new NpgsqlCommand("INSERT INTO Notificaciones (usuarioId, descripcion, fechaHora, createdAt, updatedAt) VALUES (@usuarioId, @descripcion, @fechaHora, @createdAt, @updatedAt)", connection, transaction))
+            {
+                cmd.Parameters.AddWithValue("usuarioId", notificacion.UsuarioId);
+                cmd.Parameters.AddWithValue("descripcion", notificacion.Descripcion);
+                cmd.Parameters.AddWithValue("fechaHora", notificacion.FechaHora);
+                cmd.Parameters.AddWithValue("createdAt", DateTime.UtcNow);
+                cmd.Parameters.AddWithValue("updatedAt", DateTime.UtcNow);
+                cmd.ExecuteNonQuery();
+            }
+        }
 
+        public List<NotificacionDto> ObtenerNotificacionesPorUsuario(int usuarioId, NpgsqlConnection connection)
+        {
+            var notificaciones = new List<NotificacionDto>();
 
+            using (var cmd = new NpgsqlCommand("SELECT id, usuarioId, descripcion, fechaHora FROM Notificaciones WHERE usuarioId = @usuarioId ORDER BY fechaHora DESC", connection))
+            {
+                cmd.Parameters.AddWithValue("usuarioId", usuarioId);
 
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var notificacion = new NotificacionDto
+                        {
+                            Id = reader.GetInt32(0),
+                            UsuarioId = reader.GetInt32(1),
+                            Descripcion = reader.GetString(2),
+                            FechaHora = reader.GetDateTime(3)
+                        };
 
+                        notificaciones.Add(notificacion);
+                    }
+                }
+            }
 
+            return notificaciones;
+        }
     }
 }

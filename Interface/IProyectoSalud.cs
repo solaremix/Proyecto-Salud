@@ -4,6 +4,7 @@ using Interface.Dto.Response;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
+using System.Threading.Tasks;
 
 namespace Interface
 {
@@ -87,6 +88,13 @@ namespace Interface
         [WebInvoke(Method = "POST", UriTemplate = "ObtenerVacunasPorPerfilPaciente", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         List<VacunaDto> ObtenerVacunasPorPerfilPaciente(ObtenerVacunasPorPerfilPacienteRequestDto request);
 
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/AgregarNotificacion", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        AgregarNotificacionResponseDto AgregarNotificacion(AgregarNotificacionRequestDto request);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/ObtenerNotificacionesPorUsuario?usuarioId={usuarioId}", ResponseFormat = WebMessageFormat.Json)]
+        ObtenerNotificacionesResponseDto ObtenerNotificacionesPorUsuario(int usuarioId);    
 
     }
 }

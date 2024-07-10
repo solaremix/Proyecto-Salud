@@ -60,6 +60,7 @@
     <Compile Include="Dto\Request\ActualizarVacunaRequestDto.cs" />
     <Compile Include="Dto\Request\AgregarCitaVacunacionRequestDto.cs" />
     <Compile Include="Dto\Request\AgregarEsquemaVacunacionRequestDto.cs" />
+    <Compile Include="Dto\Request\AgregarNotificacionRequestDto.cs" />
     <Compile Include="Dto\Request\AgregarPerfilPacienteRequestDto.cs" />
     <Compile Include="Dto\Request\AgregarRegistroMedicoRequestDto.cs" />
     <Compile Include="Dto\Request\AgregarVacunaRequestDto.cs" />
@@ -68,7 +69,8 @@
     <Compile Include="Dto\Request\EliminarPerfilPacienteRequestDto.cs" />
     <Compile Include="Dto\Request\EliminarRegistroMedicoRequestDto.cs" />
     <Compile Include="Dto\Request\EliminarVacunaRequestDto.cs" />
-    <Compile Include="Dto\Request\EnviarNotificacionRequestDto.cs" />
+    <Compile Include="Dto\Request\EnviarNotificacionIMCRequestDto.cs" />
+    <Compile Include="Dto\Request\EnviarNotificacionVacunaRequestDto.cs" />
     <Compile Include="Dto\Request\IniciarSesionRequestDto.cs" />
     <Compile Include="Dto\Request\ListarRegistroMedicoPorPerfilPacienteRequestDto.cs" />
     <Compile Include="Dto\Request\ModificarDatosPacienteRequestDto.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="Dto\Response\ActualizarVacunaResponseDto.cs" />
     <Compile Include="Dto\Response\AgregarCitaVacunacionResponseDto.cs" />
     <Compile Include="Dto\Response\AgregarEsquemaVacunacionResponseDto.cs" />
+    <Compile Include="Dto\Response\AgregarNotificacionResponseDto.cs" />
     <Compile Include="Dto\Response\AgregarPerfilPacienteResponseDto.cs" />
     <Compile Include="Dto\Response\AgregarRegistroMedicoResponseDto.cs" />
     <Compile Include="Dto\Response\AgregarVacunaResponseDto.cs" />
@@ -96,6 +99,7 @@
     <Compile Include="Dto\Response\ModificarDatosUsuarioResponseDto.cs" />
     <Compile Include="Dto\Response\ModificarRegistroMedicoResponseDto.cs" />
     <Compile Include="Dto\Response\ListarPacientesPorUsuarioResponseDto.cs" />
+    <Compile Include="Dto\Response\ObtenerNotificacionesResponseDto.cs" />
     <Compile Include="Dto\Response\RegistrarUsuarioResponseDto.cs" />
     <Compile Include="Dto\UsuarioDto.cs" />
     <Compile Include="Dto\VacunaDto.cs" />

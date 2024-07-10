@@ -7,6 +7,7 @@ using Business;
 using System;
 using Interface.Dto;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Service.Svc
 {
@@ -18,6 +19,7 @@ namespace Service.Svc
         private readonly BOPerfilPaciente _boPerfilPaciente;
         private readonly BORegistroMedico _boRegistroMedico;
         private readonly BOVacuna _boVacuna;
+        private readonly BONotificacion _boNotificacion;
 
         public Service()
         {
@@ -27,6 +29,7 @@ namespace Service.Svc
             _boPerfilPaciente = new BOPerfilPaciente();
             _boRegistroMedico = new BORegistroMedico();
             _boVacuna = new BOVacuna();
+            _boNotificacion = new BONotificacion();
         }
 
         public RegistrarUsuarioResponseDto RegistrarUsuario(RegistrarUsuarioRequestDto request)
@@ -140,6 +143,30 @@ namespace Service.Svc
             return _boVacuna.ObtenerVacunasPorPerfilPaciente(request.PerfilPacienteId);
         }
 
+        public AgregarNotificacionResponseDto AgregarNotificacion(AgregarNotificacionRequestDto request)
+        {
+            return _boNotificacion.AgregarNotificacion(request);
+        }
+
+        public ObtenerNotificacionesResponseDto ObtenerNotificacionesPorUsuario(int usuarioId)
+        {
+            var response = new ObtenerNotificacionesResponseDto();
+
+            try
+            {
+                var notificaciones = _boNotificacion.ObtenerNotificacionesPorUsuario(usuarioId);
+                response.Notificaciones = notificaciones;
+                response.Success = true;
+                response.Message = "Lista de notificaciones recuperada exitosamente.";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = "Error al obtener la lista de notificaciones: " + ex.Message;
+            }
+
+            return response;
+        }
 
     }
 }
