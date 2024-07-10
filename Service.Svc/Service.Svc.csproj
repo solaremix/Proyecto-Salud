@@ -155,6 +155,10 @@
       <Project>{9c170717-63d0-48e0-9fde-a95d3b91cb20}</Project>
       <Name>Business</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+      <Project>{9CCCFFA7-76B0-4A6B-9886-B4E6B055EAAE}</Project>
+      <Name>DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Interface\Interface.csproj">
       <Project>{d3e2dbbe-c82b-4812-8d68-fe286e3048af}</Project>
       <Name>Interface</Name>

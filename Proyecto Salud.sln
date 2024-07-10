@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Svc", "Service.Svc\Service.Svc.csproj", "{33DBC3CA-F392-43C7-9D8D-F5B70A8F17D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectoSalud.Tests", "ProyectoSalud.Tests\ProyectoSalud.Tests.csproj", "{1A1C84C3-CE00-43E6-A5C8-CF6B82A62F93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{33DBC3CA-F392-43C7-9D8D-F5B70A8F17D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33DBC3CA-F392-43C7-9D8D-F5B70A8F17D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33DBC3CA-F392-43C7-9D8D-F5B70A8F17D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A1C84C3-CE00-43E6-A5C8-CF6B82A62F93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A1C84C3-CE00-43E6-A5C8-CF6B82A62F93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A1C84C3-CE00-43E6-A5C8-CF6B82A62F93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A1C84C3-CE00-43E6-A5C8-CF6B82A62F93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
