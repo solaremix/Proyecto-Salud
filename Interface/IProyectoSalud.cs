@@ -1,5 +1,7 @@
-﻿using Interface.Dto.Request;
+﻿using Interface.Dto;
+using Interface.Dto.Request;
 using Interface.Dto.Response;
+using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 
@@ -48,7 +50,6 @@ namespace Interface
         [WebInvoke(Method = "POST", UriTemplate = "EliminarRegistroMedico", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         EliminarRegistroMedicoResponseDto EliminarRegistroMedico(EliminarRegistroMedicoRequestDto request);
 
-
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "ListarPacientesPorUsuario", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         ListarPacientesPorUsuarioResponseDto ListarPacientesPorUsuario(ListarPacientesPorUsuarioRequestDto request);
@@ -56,5 +57,36 @@ namespace Interface
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "ListarRegistroMedicoPorPerfilPaciente", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         ListarRegistroMedicoPorPerfilPacienteResponseDto ListarRegistroMedicoPorPerfilPaciente(ListarRegistroMedicoPorPerfilPacienteRequestDto request);
+
+        // Nuevas operaciones agregadas
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "AgregarVacuna", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        AgregarVacunaResponseDto AgregarVacuna(AgregarVacunaRequestDto request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "ActualizarVacuna", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        ActualizarVacunaResponseDto ActualizarVacuna(ActualizarVacunaRequestDto request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "EliminarVacuna", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        EliminarVacunaResponseDto EliminarVacuna(EliminarVacunaRequestDto request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "AgregarEsquemaVacunacion", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        AgregarEsquemaVacunacionResponseDto AgregarEsquemaVacunacion(AgregarEsquemaVacunacionRequestDto request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "ActualizarEsquemaVacunacion", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        ActualizarEsquemaVacunacionResponseDto ActualizarEsquemaVacunacion(ActualizarEsquemaVacunacionRequestDto request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "EliminarEsquemaVacunacion", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        EliminarEsquemaVacunacionResponseDto EliminarEsquemaVacunacion(EliminarEsquemaVacunacionRequestDto request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "ObtenerVacunasPorPerfilPaciente", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<VacunaDto> ObtenerVacunasPorPerfilPaciente(ObtenerVacunasPorPerfilPacienteRequestDto request);
+
+
     }
 }

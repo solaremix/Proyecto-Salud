@@ -5,6 +5,8 @@ using Interface.Dto.Request;
 using Interface.Dto.Response;
 using Business;
 using System;
+using Interface.Dto;
+using System.Collections.Generic;
 
 namespace Service.Svc
 {
@@ -15,6 +17,7 @@ namespace Service.Svc
         private readonly BOPerfilUsuario _boPerfilUsuario;
         private readonly BOPerfilPaciente _boPerfilPaciente;
         private readonly BORegistroMedico _boRegistroMedico;
+        private readonly BOVacuna _boVacuna;
 
         public Service()
         {
@@ -23,6 +26,7 @@ namespace Service.Svc
             _boPerfilUsuario = new BOPerfilUsuario();
             _boPerfilPaciente = new BOPerfilPaciente();
             _boRegistroMedico = new BORegistroMedico();
+            _boVacuna = new BOVacuna();
         }
 
         public RegistrarUsuarioResponseDto RegistrarUsuario(RegistrarUsuarioRequestDto request)
@@ -34,6 +38,7 @@ namespace Service.Svc
         {
             return _boAutenticacion.IniciarSesion(request);
         }
+
         public AgregarPerfilPacienteResponseDto AgregarPerfilPaciente(AgregarPerfilPacienteRequestDto request)
         {
             return _boUsuario.AgregarPerfilPaciente(request.UsuarioId, request.PerfilPaciente);
@@ -43,6 +48,7 @@ namespace Service.Svc
         {
             return _boPerfilUsuario.ModificarDatosUsuario(request);
         }
+
         public CambiarContrasenaResponseDto CambiarContrasena(CambiarContrasenaRequestDto request)
         {
             return _boPerfilUsuario.CambiarContrasena(request);
@@ -98,5 +104,42 @@ namespace Service.Svc
 
             return response;
         }
+
+        // Nuevos métodos agregados
+        public AgregarVacunaResponseDto AgregarVacuna(AgregarVacunaRequestDto request)
+        {
+            return _boVacuna.AgregarVacuna(request);
+        }
+
+        public ActualizarVacunaResponseDto ActualizarVacuna(ActualizarVacunaRequestDto request)
+        {
+            return _boVacuna.ActualizarVacuna(request);
+        }
+
+        public EliminarVacunaResponseDto EliminarVacuna(EliminarVacunaRequestDto request)
+        {
+            return _boVacuna.EliminarVacuna(request);
+        }
+
+        public AgregarEsquemaVacunacionResponseDto AgregarEsquemaVacunacion(AgregarEsquemaVacunacionRequestDto request)
+        {
+            return _boVacuna.AgregarEsquemaVacunacion(request);
+        }
+
+        public ActualizarEsquemaVacunacionResponseDto ActualizarEsquemaVacunacion(ActualizarEsquemaVacunacionRequestDto request)
+        {
+            return _boVacuna.ActualizarEsquemaVacunacion(request);
+        }
+
+        public EliminarEsquemaVacunacionResponseDto EliminarEsquemaVacunacion(EliminarEsquemaVacunacionRequestDto request)
+        {
+            return _boVacuna.EliminarEsquemaVacunacion(request);
+        }
+        public List<VacunaDto> ObtenerVacunasPorPerfilPaciente(ObtenerVacunasPorPerfilPacienteRequestDto request)
+        {
+            return _boVacuna.ObtenerVacunasPorPerfilPaciente(request.PerfilPacienteId);
+        }
+
+
     }
 }
